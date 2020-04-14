@@ -43,3 +43,22 @@ export const fetchCountries = async () => {
     console.log(error);
   }
 };
+
+export const fetchPopulation = async () => {
+  try {
+    const {
+      data: { body },
+    } = await axios({
+      method: "GET",
+      url: "https://world-population.p.rapidapi.com/worldpopulation",
+      headers: {
+        "content-type": "application/octet-stream",
+        "x-rapidapi-host": "world-population.p.rapidapi.com",
+        "x-rapidapi-key": "27d668ba2amsh5b3d038f0a200c6p1f735ejsnff1546975785",
+      },
+    });
+    return body;
+  } catch (error) {
+    console.log(error);
+  }
+};

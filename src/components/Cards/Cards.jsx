@@ -5,10 +5,15 @@ import cx from "classnames";
 
 import styles from "./Cards.module.css";
 
-const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
-  if (!confirmed) {
+const Cards = ({
+  data: { confirmed, recovered, deaths, lastUpdate },
+  population: { world_population },
+}) => {
+  if (!confirmed && !world_population) {
     return "Loading...";
   }
+  console.log(world_population);
+  const avg = (confirmed.value / world_population) * 100;
   return (
     <div className={styles.container}>
       <Grid container spacing={3} justify="center">
@@ -31,6 +36,10 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
                 separator=","
               />
             </Typography>
+            <Typography color="textSecondary" gutterBottom>
+              In Percentage
+            </Typography>
+            <Typography variant="h5">{avg.toFixed(2)}%</Typography>
             <Typography color="textSecondary">
               {new Date(lastUpdate).toDateString()}
             </Typography>
@@ -58,6 +67,18 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
                 separator=","
               />
             </Typography>
+            <Typography color="textSecondary" gutterBottom>
+              In Percentage
+            </Typography>
+            <Typography variant="h5">
+              <CountUp
+                start={0}
+                end={(recovered.value / confirmed.value) * 100}
+                duration={2.5}
+                separator=","
+              />
+              %
+            </Typography>
             <Typography color="textSecondary">
               {new Date(lastUpdate).toDateString()}
             </Typography>
@@ -84,6 +105,18 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
                 duration={2.5}
                 separator=","
               />
+            </Typography>
+            <Typography color="textSecondary" gutterBottom>
+              In Percentage
+            </Typography>
+            <Typography variant="h5">
+              <CountUp
+                start={0}
+                end={(deaths.value / confirmed.value) * 100}
+                duration={2.5}
+                separator=","
+              />
+              %
             </Typography>
             <Typography color="textSecondary">
               {new Date(lastUpdate).toDateString()}
